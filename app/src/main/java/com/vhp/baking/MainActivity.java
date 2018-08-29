@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.vhp.baking.adapter.RecipeAdapter;
 import com.vhp.baking.model.Recipe;
@@ -16,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeOnClickHandler {
 
 
     private static final String TAG = "MainActivity";
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < response.body().size(); i++) {
                     Log.d(TAG, "onResponse: " + response.body().get(i).getName());
                 }
-                RecipeAdapter mRecipeAdapter = new RecipeAdapter(mRecipeList);
+                RecipeAdapter mRecipeAdapter = new RecipeAdapter(mRecipeList , MainActivity.this);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                         MainActivity.this , LinearLayoutManager.VERTICAL , false
                 );
@@ -52,5 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onFailure: "+t);
             }
         });
+    }
+
+    @Override
+    public void onClick(Recipe recipeInfo) {
+        Toast.makeText(MainActivity.this, recipeInfo.getName(), Toast.LENGTH_SHORT).show();
     }
 }

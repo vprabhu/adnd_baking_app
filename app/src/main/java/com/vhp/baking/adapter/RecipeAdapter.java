@@ -7,10 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.vhp.baking.R;
 import com.vhp.baking.model.Recipe;
+import com.vhp.baking.utils.Constants;
 
 import java.util.List;
 
@@ -18,10 +21,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private static final String TAG = "RecipeAdapter";
 
     private List<Recipe> mRecipeList;
+    private RecipeOnClickHandler mRecipeOnClickHandler;
 
-    public RecipeAdapter(List<Recipe> mRecipeList) {
+    public RecipeAdapter(List<Recipe> mRecipeList , RecipeOnClickHandler mRecipeOnClickHandlerParam) {
         this.mRecipeList = mRecipeList;
+        mRecipeOnClickHandler = mRecipeOnClickHandlerParam;
     }
+
+    /**
+     * The interface that receives onClick messages.
+     */
+    public interface RecipeOnClickHandler {
+        void onClick(Recipe recipeInfo);
+    }
+
 
     @NonNull
     @Override
@@ -38,8 +51,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder recipeViewHolder, int i) {
-        recipeViewHolder.mRecipeTextView.setText(mRecipeList.get(i).getName());
-        Log.d(TAG, "onBindViewHolder: "+ mRecipeList.get(i).getName());
+        recipeViewHolder.bind(i);
     }
 
     @Override
@@ -47,13 +59,53 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return mRecipeList.size();
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder{
+    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView mRecipeTextView;
+        ImageView mRecipeImageView;
 
-        public RecipeViewHolder(@NonNull View itemView) {
+        RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             mRecipeTextView = itemView.findViewById(R.id.textView_recipe_name);
+            mRecipeImageView = itemView.findViewById(R.id.imageView_recipe_image);
+            itemView.setOnClickListener(this);
         }
+
+        void bind(int position){
+            mRecipeTextView.setText(mRecipeList.get(position).getName());
+            String path = mRecipeList.get(position).getImage();
+            if(!path.isEmpty()){
+                Picasso.with(itemView.getContext()).load(path)
+                        .into(mRecipeImageView);
+            }else{
+                Picasso.with(itemView.getContext())
+                        .load(setDefaultForRecipes(position))
+                        .into(mRecipeImageView);
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            mRecipeOnClickHandler.onClick(mRecipeList.get(getAdapterPosition()));
+        }
+    }
+
+    private String setDefaultForRecipes(int index){
+        String defaultImagePath = null;
+        switch (index){
+            case 0:
+                defaultImagePath = Constants.NUTELLA_PIE_IMAGE_PATH;
+                break;
+            case 1:
+                defaultImagePath = Constants.BROWNIE_IMAGE_PATH;
+                break;
+            case 2:
+                defaultImagePath = Constants.YELLOWCAKE_IMAGE_PATH;
+                break;
+            case 3:
+                defaultImagePath = Constants.CHEESECAKE_IMAGE_PATH;
+                break;
+        }
+        return defaultImagePath;
     }
 }
