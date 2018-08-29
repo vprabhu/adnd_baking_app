@@ -1,5 +1,6 @@
 package com.vhp.baking;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,8 @@ import com.vhp.baking.retrofit.RetrofitAPICaller;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,15 +24,15 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
 
     private static final String TAG = "MainActivity";
-    private RecyclerView mRecipeRecyclerView;
+    @BindView(R.id.recyclerView_recipe)
+    RecyclerView mRecipeRecyclerView;
     private List<Recipe> mRecipeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mRecipeRecyclerView = findViewById(R.id.recyclerView_recipe);
+        ButterKnife.bind(MainActivity.this);
 
         RetrofitAPICaller.getInstance(MainActivity.this).getMoviesAPIs().getRecipe().enqueue(new Callback<List<Recipe>>() {
             @Override
@@ -57,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
     @Override
     public void onClick(Recipe recipeInfo) {
-        Toast.makeText(MainActivity.this, recipeInfo.getName(), Toast.LENGTH_SHORT).show();
+        Intent mIntent = new Intent(MainActivity.this , RecipeActivity.class);
+        mIntent.putExtra("Recipe" , recipeInfo);
+        startActivity(mIntent);
     }
 }

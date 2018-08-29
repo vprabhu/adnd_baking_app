@@ -3,7 +3,6 @@ package com.vhp.baking.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.vhp.baking.R;
 import com.vhp.baking.model.Recipe;
+import com.vhp.baking.model.Step;
 import com.vhp.baking.utils.Constants;
 
 import java.util.List;
@@ -20,13 +20,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>{
+public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeStepsViewHolder>{
     private static final String TAG = "RecipeAdapter";
 
-    private List<Recipe> mRecipeList;
+    private List<Step> mRecipeList;
     private RecipeOnClickHandler mRecipeOnClickHandler;
 
-    public RecipeAdapter(List<Recipe> mRecipeList , RecipeOnClickHandler mRecipeOnClickHandlerParam) {
+    public RecipeStepsAdapter(List<Step> mRecipeList , RecipeOnClickHandler mRecipeOnClickHandlerParam) {
         this.mRecipeList = mRecipeList;
         mRecipeOnClickHandler = mRecipeOnClickHandlerParam;
     }
@@ -41,20 +41,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @NonNull
     @Override
-    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecipeStepsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
-        int layoutIdForListItem = R.layout.layout_recipe_row;
+        int layoutIdForListItem = R.layout.layout_recipe_row_steps;
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // inflates the desired layout
         View view = inflater.inflate(layoutIdForListItem, viewGroup, false);
 
-        return new RecipeViewHolder(view);
+        return new RecipeStepsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipeViewHolder recipeViewHolder, int i) {
-        recipeViewHolder.bind(i);
+    public void onBindViewHolder(@NonNull RecipeStepsViewHolder recipeStepsViewHolder, int i) {
+        recipeStepsViewHolder.bind(i);
     }
 
     @Override
@@ -62,24 +62,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return mRecipeList.size();
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class RecipeStepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        @BindView(R.id.textView_recipe_name)
+        @BindView(R.id.textView_recipe_row_steps)
         TextView mRecipeTextView;
-        @BindView(R.id.imageView_recipe_image)
-        ImageView mRecipeImageView;
+//        ImageView mRecipeImageView;
 
-        RecipeViewHolder(@NonNull View itemView) {
+        RecipeStepsViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this , itemView);
-//            mRecipeTextView = itemView.findViewById(R.id.textView_recipe_name);
-//            mRecipeImageView = itemView.findViewById(R.id.imageView_recipe_image);
             itemView.setOnClickListener(this);
         }
 
         void bind(int position){
-            mRecipeTextView.setText(mRecipeList.get(position).getName());
-            String path = mRecipeList.get(position).getImage();
+            mRecipeTextView.setText(mRecipeList.get(position).getShortDescription());
+            /*String path = mRecipeList.get(position).getImage();
             if(!path.isEmpty()){
                 Picasso.with(itemView.getContext()).load(path)
                         .into(mRecipeImageView);
@@ -87,12 +84,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 Picasso.with(itemView.getContext())
                         .load(setDefaultForRecipes(position))
                         .into(mRecipeImageView);
-            }
+            }*/
         }
 
         @Override
         public void onClick(View v) {
-            mRecipeOnClickHandler.onClick(mRecipeList.get(getAdapterPosition()));
+//            mRecipeOnClickHandler.onClick(mRecipeList.get(getAdapterPosition()));
         }
     }
 
