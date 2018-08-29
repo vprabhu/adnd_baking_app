@@ -3,7 +3,6 @@ package com.vhp.baking.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>{
-    private static final String TAG = "RecipeAdapter";
+public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder>{
+    private static final String TAG = "RecipeListAdapter";
 
     private List<Recipe> mRecipeList;
     private RecipeOnClickHandler mRecipeOnClickHandler;
 
-    public RecipeAdapter(List<Recipe> mRecipeList , RecipeOnClickHandler mRecipeOnClickHandlerParam) {
+    public RecipeListAdapter(List<Recipe> mRecipeList , RecipeOnClickHandler mRecipeOnClickHandlerParam) {
         this.mRecipeList = mRecipeList;
         mRecipeOnClickHandler = mRecipeOnClickHandlerParam;
     }

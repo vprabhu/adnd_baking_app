@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.vhp.baking.adapter.RecipeAdapter;
+import com.vhp.baking.adapter.RecipeListAdapter;
 import com.vhp.baking.model.Recipe;
 import com.vhp.baking.retrofit.RetrofitAPICaller;
 
@@ -20,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeOnClickHandler {
+public class MainActivity extends AppCompatActivity implements RecipeListAdapter.RecipeOnClickHandler {
 
 
     private static final String TAG = "MainActivity";
@@ -43,12 +42,12 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 for (int i = 0; i < response.body().size(); i++) {
                     Log.d(TAG, "onResponse: " + response.body().get(i).getName());
                 }
-                RecipeAdapter mRecipeAdapter = new RecipeAdapter(mRecipeList , MainActivity.this);
+                RecipeListAdapter mRecipeListAdapter = new RecipeListAdapter(mRecipeList , MainActivity.this);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                         MainActivity.this , LinearLayoutManager.VERTICAL , false
                 );
                 mRecipeRecyclerView.setLayoutManager(linearLayoutManager);
-                mRecipeRecyclerView.setAdapter(mRecipeAdapter);
+                mRecipeRecyclerView.setAdapter(mRecipeListAdapter);
             }
 
             @Override

@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeStepsViewHolder>{
-    private static final String TAG = "RecipeAdapter";
+    private static final String TAG = "RecipeListAdapter";
 
     private List<Step> mRecipeList;
     private RecipeOnClickHandler mRecipeOnClickHandler;
@@ -35,7 +35,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
      * The interface that receives onClick messages.
      */
     public interface RecipeOnClickHandler {
-        void onClick(Recipe recipeInfo);
+        void onClick(List<Step> mRecipeList , int position);
     }
 
 
@@ -66,7 +66,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
         @BindView(R.id.textView_recipe_row_steps)
         TextView mRecipeTextView;
-//        ImageView mRecipeImageView;
+        @BindView(R.id.imageView_recipe_row_step_image)
+        ImageView mRecipeImageView;
 
         RecipeStepsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,20 +77,16 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
         void bind(int position){
             mRecipeTextView.setText(mRecipeList.get(position).getShortDescription());
-            /*String path = mRecipeList.get(position).getImage();
+            String path = mRecipeList.get(position).getThumbnailURL();
             if(!path.isEmpty()){
                 Picasso.with(itemView.getContext()).load(path)
                         .into(mRecipeImageView);
-            }else{
-                Picasso.with(itemView.getContext())
-                        .load(setDefaultForRecipes(position))
-                        .into(mRecipeImageView);
-            }*/
+            }
         }
 
         @Override
         public void onClick(View v) {
-//            mRecipeOnClickHandler.onClick(mRecipeList.get(getAdapterPosition()));
+            mRecipeOnClickHandler.onClick(mRecipeList , getAdapterPosition());
         }
     }
 

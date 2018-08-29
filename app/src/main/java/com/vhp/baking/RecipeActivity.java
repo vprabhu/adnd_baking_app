@@ -1,5 +1,7 @@
 package com.vhp.baking;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +11,9 @@ import android.widget.TextView;
 
 import com.vhp.baking.adapter.RecipeStepsAdapter;
 import com.vhp.baking.model.Recipe;
+import com.vhp.baking.model.Step;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -58,11 +62,13 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepsAdap
 
         mRecipeRecyclerView.setLayoutManager(linearLayoutManager);
         mRecipeRecyclerView.setAdapter(mRecipeStepsAdapter);
-
     }
 
     @Override
-    public void onClick(Recipe recipeInfo) {
-
+    public void onClick(List<Step> mRecipeList, int position) {
+        Intent mIntent = new Intent(RecipeActivity.this , RecipePlayActivity.class);
+        mIntent.putExtra("Recipename" , mUserSelectedRecipe.getName());
+        mIntent.putParcelableArrayListExtra("RecipeSteps" , (ArrayList<Step>) mRecipeList);
+        startActivity(mIntent);
     }
 }
