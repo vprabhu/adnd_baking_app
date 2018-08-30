@@ -5,31 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="250dp"
     android:layout_margin="8dp"
-    android:padding="8dp"
-    android:elevation="16dp">
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/imageView_recipe_image"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"
+        tools:src="@mipmap/ic_launcher"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="75dp"
+        android:background="@android:color/black"
+        android:alpha="0.5"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:layout_weight="0.8"
-            android:id="@+id/imageView_recipe_image"
-            android:layout_width="match_parent"
-            android:scaleType="centerCrop"
-            android:layout_height="0dp"
-            tools:src="@mipmap/ic_launcher"/>
         <TextView
-            android:layout_weight="0.2"
             android:id="@+id/textView_recipe_name"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             tools:text="TextView"
-            android:textSize="40sp"
+            android:layout_margin="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
             android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"/>
+
     </LinearLayout>
 
 
