@@ -90,22 +90,4 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         }
     }
 
-    private String setDefaultForRecipes(int index){
-        String defaultImagePath = null;
-        switch (index){
-            case 0:
-                defaultImagePath = Constants.NUTELLA_PIE_IMAGE_PATH;
-                break;
-            case 1:
-                defaultImagePath = Constants.BROWNIE_IMAGE_PATH;
-                break;
-            case 2:
-                defaultImagePath = Constants.YELLOWCAKE_IMAGE_PATH;
-                break;
-            case 3:
-                defaultImagePath = Constants.CHEESECAKE_IMAGE_PATH;
-                break;
-        }
-        return defaultImagePath;
-    }
 }

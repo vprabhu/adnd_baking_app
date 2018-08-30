@@ -68,6 +68,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepsAdap
     public void onClick(List<Step> mRecipeList, int position) {
         Intent mIntent = new Intent(RecipeActivity.this , RecipePlayActivity.class);
         mIntent.putExtra("Recipename" , mUserSelectedRecipe.getName());
+        mIntent.putExtra("RecipeStepPosition" , position);
         mIntent.putParcelableArrayListExtra("RecipeSteps" , (ArrayList<Step>) mRecipeList);
         startActivity(mIntent);
     }
