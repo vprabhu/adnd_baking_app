@@ -16,22 +16,38 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="match_parent"
         android:background="@android:color/black"
-        android:alpha="0.5"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:alpha="0.6"
+        android:gravity="bottom"
+        android:padding="16dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView_recipe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="TextView"
-            android:layout_margin="8dp"
+            tools:text="Nutella Pie"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:fontFamily="serif-monospace"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="40sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp" />
+
+        <TextView
+            android:id="@+id/textView_recipe_steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Nutella Pie"
+            android:layout_gravity="right"
+            android:layout_marginStart="16dp"
+            android:fontFamily="serif-monospace"
+            android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp" />
 
     </LinearLayout>
 

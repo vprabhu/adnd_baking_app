@@ -67,6 +67,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         TextView mRecipeTextView;
         @BindView(R.id.imageView_recipe_image)
         ImageView mRecipeImageView;
+        @BindView(R.id.textView_recipe_steps)
+        TextView mRecipeStepsTextView;
 
         RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,6 +78,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
         void bind(int position){
             mRecipeTextView.setText(mRecipeList.get(position).getName());
+            String stepsDisplay = String.valueOf(mRecipeList.get(position).getSteps().size())+" steps - "+
+                    String.valueOf(mRecipeList.get(position).getServings())+" servings";
+            mRecipeStepsTextView.setText(stepsDisplay);
             String path = mRecipeList.get(position).getImage();
             if(!path.isEmpty()){
                 Picasso.with(itemView.getContext()).load(path)
