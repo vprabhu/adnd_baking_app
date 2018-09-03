@@ -1,12 +1,12 @@
 package com.vhp.baking;
 
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.vhp.baking.adapter.RecipeStepsAdapter;
@@ -25,6 +25,8 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepsAdap
     RecyclerView mRecipeRecyclerView;
     @BindView(R.id.textView_recipe_ingredients)
     TextView mIngredientsTextView;
+    @BindView(R.id.recyclerView_ingredients)
+    RecyclerView mIngredientsRecyclerView;
 
     private Recipe mUserSelectedRecipe;
 
@@ -41,13 +43,19 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepsAdap
         StringBuilder ingredients = new StringBuilder();
         for (int i = 0; i < mUserSelectedRecipe.getIngredients().size(); i++) {
             Log.d("RecipeActivity", "onCreate: " + mUserSelectedRecipe.getIngredients().get(i).getIngredient());
-            ingredients.append(mUserSelectedRecipe.getIngredients().get(i).getIngredient()+"\n");
+            ingredients.append(mUserSelectedRecipe.getIngredients().get(i).getIngredient()).append("\n");
         }
 
         for (int i = 0; i < mUserSelectedRecipe.getSteps().size(); i++) {
             Log.d("RecipeActivity", "onCreate: "+mUserSelectedRecipe.getSteps().get(i).getShortDescription());
         }
         mIngredientsTextView.setText(ingredients);
+        mIngredientsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         //setup recyclerView
         RecipeStepsAdapter mRecipeStepsAdapter  = new RecipeStepsAdapter(
