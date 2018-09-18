@@ -25,8 +25,6 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepsAdap
     RecyclerView mRecipeRecyclerView;
     @BindView(R.id.textView_recipe_ingredients)
     TextView mIngredientsTextView;
-    @BindView(R.id.recyclerView_ingredients)
-    RecyclerView mIngredientsRecyclerView;
 
     private Recipe mUserSelectedRecipe;
 
