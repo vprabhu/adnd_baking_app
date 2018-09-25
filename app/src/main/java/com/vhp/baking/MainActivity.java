@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
 
     @Override
     public void onClick(Recipe recipeInfo) {
-        Intent mIntent = new Intent(MainActivity.this , RecipeActivity.class);
+        Intent mIntent = new Intent(MainActivity.this ,
+                RecipeInfoActivity.class);
         mIntent.putExtra("Recipe" , recipeInfo);
         startActivity(mIntent);
     }
