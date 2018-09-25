@@ -29,7 +29,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.vhp.baking.R;
-import com.vhp.baking.RecipePlayActivity;
 import com.vhp.baking.model.Step;
 
 import java.util.ArrayList;
@@ -69,7 +68,6 @@ public class RecipePlayFragment extends Fragment implements Player.EventListener
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            String name = bundle.getString("Recipename");
             recipeStepNumber = bundle.getInt("RecipeStepPosition");
             mStepList = bundle.getParcelableArrayList("RecipeSteps");
         }
@@ -79,7 +77,7 @@ public class RecipePlayFragment extends Fragment implements Player.EventListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_recipe_play, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recipe_play, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +188,9 @@ public class RecipePlayFragment extends Fragment implements Player.EventListener
         }else if(playbackState == Player.STATE_IDLE){
             Log.d(TAG, "onPlayerStateChanged: Idle");
             // setting the default artwork on PlayerView
-            mPlayerView.hideController();
+            if(mPlayerView!=null){
+                mPlayerView.hideController();
+            }
         }
     }
 

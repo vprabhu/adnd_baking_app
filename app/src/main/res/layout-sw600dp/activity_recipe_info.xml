@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_two_pane"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.vhp.baking.ui.RecipeInfoFragment"
+        android:id="@+id/layout_recipe_container"
+        android:layout_weight="0.4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <!-- A small divider -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray" />
+
+    <FrameLayout
+        android:id="@+id/layout_recipe_play_fragment"
+        android:layout_weight="0.6"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

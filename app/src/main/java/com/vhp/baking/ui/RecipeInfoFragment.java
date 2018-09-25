@@ -1,8 +1,9 @@
 package com.vhp.baking.ui;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.vhp.baking.R;
 import com.vhp.baking.RecipeInfoActivity;
+import com.vhp.baking.RecipePlayActivity;
 import com.vhp.baking.adapter.RecipeStepsAdapter;
 import com.vhp.baking.model.Recipe;
 import com.vhp.baking.model.Step;
@@ -40,14 +42,33 @@ public class RecipeInfoFragment extends Fragment implements RecipeStepsAdapter.R
     TextView mIngredientsTextView;
     private Unbinder mUnbinder;
     private Recipe mUserSelectedRecipe;
+    private View rootView;
+
+    private onIngredientClickListener mOnIngredientClickListener;
+
+    // OnImageClickListener interface, calls a method in the host activity named onImageSelected
+    public interface onIngredientClickListener {
+        void onIngredientSelected(List<Step> mRecipeList , int position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the host activity has implemented the callback interface
+        // If not, it throws an exception
+        try {
+            mOnIngredientClickListener = (onIngredientClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnImageClickListener");
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            mUserSelectedRecipe = bundle.getParcelable("Recipe");
-        }
+
     }
 
     @Override
@@ -55,9 +76,18 @@ public class RecipeInfoFragment extends Fragment implements RecipeStepsAdapter.R
                              Bundle savedInstanceState) {
 
         // Inflate the Android-Me fragment layout
-        View rootView = inflater.inflate(R.layout.activity_recipe, container, false);
+        rootView = inflater.inflate(R.layout.activity_recipe, container, false);
         mUnbinder = ButterKnife.bind(this , rootView);
 
+
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RecipeInfoActivity mRecipeInfoActivity = (RecipeInfoActivity) getActivity();
+        mUserSelectedRecipe = mRecipeInfoActivity.getUserSelectedRecipe();
         StringBuilder ingredients = new StringBuilder();
         for (int i = 0; i < mUserSelectedRecipe.getIngredients().size(); i++) {
             Log.d("RecipeInfoActivity", "onCreate: " + mUserSelectedRecipe.getIngredients().get(i).getIngredient());
@@ -78,7 +108,6 @@ public class RecipeInfoFragment extends Fragment implements RecipeStepsAdapter.R
 
         mRecipeRecyclerView.setLayoutManager(linearLayoutManager);
         mRecipeRecyclerView.setAdapter(mRecipeStepsAdapter);
-        return rootView;
     }
 
     @Override
@@ -89,7 +118,7 @@ public class RecipeInfoFragment extends Fragment implements RecipeStepsAdapter.R
 
     @Override
     public void onClick(List<Step> mRecipeList, int position) {
-        RecipePlayFragment mRecipePlayFragment = new RecipePlayFragment();
+       /* RecipePlayFragment mRecipePlayFragment = new RecipePlayFragment();
         Bundle mBundle = new Bundle();
         mBundle.putString("Recipename" , mUserSelectedRecipe.getName());
         mBundle.putInt("RecipeStepPosition" , position);
@@ -97,6 +126,14 @@ public class RecipeInfoFragment extends Fragment implements RecipeStepsAdapter.R
         mRecipePlayFragment.setArguments(mBundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(
                 R.id.layout_recipe_container , mRecipePlayFragment
-        ).addToBackStack(null).commit();
+        ).addToBackStack(null).commit();*/
+
+       mOnIngredientClickListener.onIngredientSelected(mRecipeList , position);
+
+        /*Intent mIntent = new Intent(getActivity(), RecipePlayActivity.class);
+        mIntent.putExtra("Recipename" , mUserSelectedRecipe.getName());
+        mIntent.putExtra("RecipeStepPosition" , position);
+        mIntent.putParcelableArrayListExtra("RecipeSteps" , (ArrayList<Step>) mRecipeList);
+        startActivity(mIntent);*/
     }
 }
